@@ -8,8 +8,6 @@ public class pizzaApplication extends JFrame implements ActionListener{
     final int FRAME_HEIGHT = 400;
     public float totalPrice = 0;
     JLabel finalAmount;
-    JComboBox topping2;
-    JComboBox topping3;
     public pizzaApplication(){
         //sets up GUI
         setLayout(new FlowLayout());
@@ -23,11 +21,11 @@ public class pizzaApplication extends JFrame implements ActionListener{
         add(title);
 
         //blank label to help separate items
-        JLabel blank1 = new JLabel("                                                               ");
+        JLabel blank1 = new JLabel("                                                                                                                                             ");
         add(blank1);
 
         //designs the label and combobox to choose pizza size
-        JLabel sizeLabel = new JLabel("Size:     ");
+        JLabel sizeLabel = new JLabel("Pizza Size:   ");
         sizeLabel.setFont(new Font("Courier New", Font.BOLD, 20));
         add(sizeLabel); //adds label
 
@@ -39,11 +37,11 @@ public class pizzaApplication extends JFrame implements ActionListener{
 
         //designs the label to tell about toppings
         JLabel toppingLabel = new JLabel("Toppings ($0.50 each, 3 for $1.25):");
-        toppingLabel.setFont(new Font("Courier New", Font.BOLD, 16));
+        toppingLabel.setFont(new Font("Courier New", Font.BOLD, 15));
         add(toppingLabel); //adds label
 
         //choices for toppings
-        String[] toppingChoices = { "Pick a Topping", "Extra Cheese","Ham $0.50", "Sausage $0.50","Pepperoni $0.50", "Mushrooms $0.50", "Onions $0.50"};
+        String[] toppingChoices = { "Pick a Topping", "Ham $0.50", "Sausage $0.50","Pepperoni $0.50", "Mushrooms $0.50", "Onions $0.50", "Peppers $0.50", "Chicken $0.50"};
 
         //creates comboboxes for choosing toppings
         JComboBox topping1 = new JComboBox(toppingChoices);
@@ -56,15 +54,21 @@ public class pizzaApplication extends JFrame implements ActionListener{
         add(topping2); //adds second topping box
         topping2.addActionListener(this); //adds actionlistener to help determine final cost based on selection
 
-        String[] thirdToppingChoices = { "Pick a Topping", "Extra Cheese","Ham $0.25", "Sausage $0.25","Pepperoni $0.25", "Mushrooms $0.25", "Onions $0.25"};
-
-        topping3 = new JComboBox(thirdToppingChoices);
+        //discounted topping prices because of third
+        String[] thirdToppingChoices = { "Pick a Topping", "Ham $0.25", "Sausage $0.25","Pepperoni $0.25", "Mushrooms $0.25", "Onions $0.25", "Pepper $0.25", "Chicken $0.25"};
+        JComboBox topping3 = new JComboBox(thirdToppingChoices);
         topping3.setFont(new Font( "Courier New", Font.PLAIN, 12));
         add(topping3); //adds third topping box
         topping3.addActionListener(this); //adds actionlistener to help determine final cost based on selection
 
+        //gives the user the choice for extra cheese free of charge
+        String[] cheeseChoice = { "No Extra Cheese", "Extra Cheese"};
+        JComboBox cheeseAmount = new JComboBox(cheeseChoice);
+        cheeseAmount.setFont(new Font( "Courier New", Font.PLAIN, 12));
+        add(cheeseAmount); //adds third topping box
+
         //blank label to help separate items
-        JLabel blank2 = new JLabel("                                                                       ");
+        JLabel blank2 = new JLabel("                                                                                                                          ");
         add(blank2);
 
         //designs the label to tell about sides
@@ -100,13 +104,8 @@ public class pizzaApplication extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e){
         JComboBox cb=(JComboBox)e.getSource(); //gets selected value in the combobox
         Object newItem = cb.getSelectedItem(); //saves selected value
-        if (newItem == "Extra Cheese"){
-            finalAmount.setText("   Total:  " + totalPrice);
-        }
-        else {
-            int pos = newItem.toString().indexOf("$") + 1; //Finding where dollar sign exists in the saved string
-            totalPrice += Float.parseFloat(newItem.toString().substring(pos));
-            finalAmount.setText("   Total:  " + totalPrice);
-        }
+        int pos = newItem.toString().indexOf("$") + 1; //Finding where dollar sign exists in the saved string
+        totalPrice += Float.parseFloat(newItem.toString().substring(pos)); //adds new item to the current total
+        finalAmount.setText("   Total:  " + totalPrice); //displays total amount
     }
 }
